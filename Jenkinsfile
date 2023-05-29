@@ -71,7 +71,7 @@ pipeline {
             sh "docker push docker.io/${imageName}"
             
             // Récupérez l'image Docker depuis Docker Hub dans le conteneur Nginx
-            sh "docker exec ${nginxContainerId} docker pull docker.io/${imageName}"
+            sh "docker exec ${nginxContainerId} docker pull ${imageName}"
             
             // Redémarrez le conteneur Nginx pour utiliser la nouvelle image
             sh "docker restart ${nginxContainerId}"
