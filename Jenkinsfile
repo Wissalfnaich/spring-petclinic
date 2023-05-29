@@ -4,7 +4,7 @@ pipeline {
         jdk 'openJDK'
         maven 'Maven'
     }
-    stage {
+    stages {
         stage('Set JAVA_HOME') {
             steps {
                 timestamps{
