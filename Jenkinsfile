@@ -4,15 +4,7 @@ pipeline {
         jdk 'openJDK'
         maven 'Maven'
     }
-        
-    stages {
-        stage('Set JAVA_HOME') {
-            steps {
-                script {
-                    env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
-                }
-            }
-        }
+       
         stage("build jar") {
             steps {
                 echo "building the application..."
@@ -36,15 +28,6 @@ pipeline {
                 }
             }
         }
-        stage('test') {
-            steps {
-                echo 'testing'
-            }
-        }
-        stage('deploy') {
-            steps {
-                echo 'deploying'
-            }
         }
     
  
