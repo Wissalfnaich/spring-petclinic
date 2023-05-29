@@ -16,8 +16,14 @@ pipeline {
         stage("build jar") {
             steps {
                 echo "building the application..."
-                sh 'javac -version'
+ 
                 sh 'mvn package'
+            }
+        }
+       stage('Code Coverage') {
+            steps {
+                // Generate code coverage report
+                sh 'mvn jacoco:prepare-agent test jacoco:report'
             }
         }
         stage("build image") {
@@ -43,4 +49,14 @@ pipeline {
     
  
 }
+     post {
+        always {
+            // Publish code coverage report
+            jacoco(
+                execPattern: '**/target/jacoco.exec',
+                classPattern: '**/classes',
+                sourcePattern: '**/src/main/java'
+            )
+        }
+    }
 }
