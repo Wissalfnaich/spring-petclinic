@@ -55,6 +55,15 @@ pipeline {
             }
         }
     }
+    stage('Copy files to Nginx container') {
+    steps {
+        sh '''
+        docker exec fada085c21f7 sh -c "mkdir -p /path/to/nginx/destination"
+        docker cp ./target/spring-petclinic-3.0.0-SNAPSHOT.jar fada085c21f7:/usr/share/nginx/html
+        '''
+    }
+}
+
     post {
         always {
             // Publish code coverage report
