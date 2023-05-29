@@ -4,22 +4,22 @@ pipeline {
         jdk 'openJDK'
         maven 'Maven'
     }
-     stages {
-         stage('Set JAVA_HOME') {
-          steps {
-            script {
-               env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
-                    }
-               }
-              }
+    stages {
+        stage('Set JAVA_HOME') {
+            steps {
+                script {
+                    env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
+                }
+            }
+        }
         stage("build jar") {
             steps {
-               echo "building the application..."
+                echo "building the application..."
                 sh 'javac -version'
                 sh 'mvn package'
             }
         }
-       stage('Code Coverage') {
+        stage('Code Coverage') {
             steps {
                 // Generate code coverage report
                 sh 'mvn jacoco:prepare-agent test jacoco:report'
@@ -34,21 +34,19 @@ pipeline {
                     sh 'docker push wissaaal/my-repo:jma-2.0'
                 }
             }
-                stage('test') {
+        }
+        stage('test') {
             steps {
-               echo 'testing'
+                echo 'testing'
             }
         }
-         stage('deploy') {
+        stage('deploy') {
             steps {
-               echo 'deploing'
+                echo 'deploying'
             }
         }
-    
-   
-  
-}
-     post {
+    }
+    post {
         always {
             // Publish code coverage report
             jacoco(
