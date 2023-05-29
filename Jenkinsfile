@@ -61,23 +61,24 @@ pipeline {
             }
         }
         
-      stage('Deploy') {
+    stage('Deploy') {
     steps {
         script {
             def imageName = 'wissaaal/my-repo:jma-2.0'
             def nginxContainerId = sh(returnStdout: true, script: 'docker ps -q --filter "id=d99cf8d02dbc"').trim()
             
-            // Poussez l'image Docker vers un registre Docker accessible depuis le conteneur Nginx
-            sh 'docker push ${imageName}'
+            // Poussez l'image Docker vers Docker Hub
+            sh "docker push docker.io/${imageName}"
             
-            // Récupérez l'image Docker dans le conteneur Nginx
-            sh "docker exec ${nginxContainerId} docker pull ${imageName}"
+            // Récupérez l'image Docker depuis Docker Hub dans le conteneur Nginx
+            sh "docker exec ${nginxContainerId} docker pull docker.io/${imageName}"
             
             // Redémarrez le conteneur Nginx pour utiliser la nouvelle image
             sh "docker restart ${nginxContainerId}"
         }
     }
 }
+
 
     }
     
