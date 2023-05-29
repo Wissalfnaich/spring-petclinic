@@ -61,14 +61,15 @@ pipeline {
             }
         }
         
-        stage('Copy files to Nginx container') {
-            steps {
-                sh '''
-                docker exec fada085c21f7 sh -c "mkdir -p /path/to/nginx/destination"
-                docker cp ./target/spring-petclinic-3.0.0-SNAPSHOT.jar fada085c21f7:/usr/share/nginx/html
-                '''
-            }
+       stage('Copy files to Nginx container') {
+         steps {
+           script {
+             def imageName = 'wissaaal/my-repo:jma-2.0'
+             def nginxContainerId = sh(returnStdout: true, script: 'docker ps -q -f "d99cf8d02dbc"').trim()
+             sh "docker cp ${imageName} ${nginxContainerId}:/path/to/nginx/destination"
         }
+    }
+}
     }
     
     post {
