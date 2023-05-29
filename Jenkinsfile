@@ -61,12 +61,20 @@ pipeline {
             }
         }
         
-       stage('Copy files to Nginx container') {
+      stage('Deploy') {
     steps {
         script {
             def imageName = 'wissaaal/my-repo:jma-2.0'
             def nginxContainerId = sh(returnStdout: true, script: 'docker ps -q --filter "id=d99cf8d02dbc"').trim()
-            sh "docker cp ${imageName} ${nginxContainerId}:/path/to/nginx/destination"
+            
+            // Poussez l'image Docker vers un registre Docker accessible depuis le conteneur Nginx
+            sh 'docker push ${imageName}'
+            
+            // Récupérez l'image Docker dans le conteneur Nginx
+            sh "docker exec ${nginxContainerId} docker pull ${imageName}"
+            
+            // Redémarrez le conteneur Nginx pour utiliser la nouvelle image
+            sh "docker restart ${nginxContainerId}"
         }
     }
 }
