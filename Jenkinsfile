@@ -5,7 +5,13 @@ pipeline {
         maven 'Maven'
     }
      stages {
-       
+         stage('Set JAVA_HOME') {
+          steps {
+            script {
+               env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
+                    }
+               }
+              }
         stage("build jar") {
             steps {
                echo "building the application..."
@@ -28,10 +34,19 @@ pipeline {
                     sh 'docker push wissaaal/my-repo:jma-2.0'
                 }
             }
-       
-   
+                stage('test') {
+            steps {
+               echo 'testing'
+            }
+        }
+         stage('deploy') {
+            steps {
+               echo 'deploing'
+            }
+        }
     
- 
+   
+  
 }
      post {
         always {
