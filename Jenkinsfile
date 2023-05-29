@@ -4,7 +4,8 @@ pipeline {
         jdk 'openJDK'
         maven 'Maven'
     }
-       
+      stages {
+        
         stage("build jar") {
             steps {
                 echo "building the application..."
