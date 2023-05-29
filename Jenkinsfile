@@ -21,7 +21,7 @@ pipeline {
             steps {
                 timestamps {
                     echo "building the application..."
-                    sh 'javac -version'
+                    sh 'mvn clean install'
                     sh 'mvn package'
                 }
             }
