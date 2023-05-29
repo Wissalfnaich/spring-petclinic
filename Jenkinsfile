@@ -43,5 +43,11 @@ pipeline {
             }
         }
     }
+     stage('Deploy to Azure') {
+            steps {
+                echo "Deploy to Azure"
+                azureWebAppPublish appName: 'petclinic1', resourceGroup: 'ppp', credentialsId: 'Azure_cred', publishType: 'jar', filePath: 'target/spring-petclinic-3.0.0-SNAPSHOT.jar'
+            }
+        }
     
 }
