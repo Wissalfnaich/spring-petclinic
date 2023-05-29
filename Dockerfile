@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:17
 
 # Définir la variable d'environnement pour le port d'application
 ENV PORT=8081
