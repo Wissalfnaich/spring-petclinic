@@ -4,12 +4,12 @@ pipeline {
         jdk 'openJDK'
         maven 'Maven'
     }
-      stages {
-        
+     stages {
+       
         stage("build jar") {
             steps {
-                echo "building the application..."
- 
+               echo "building the application..."
+                sh 'javac -version'
                 sh 'mvn package'
             }
         }
@@ -28,8 +28,8 @@ pipeline {
                     sh 'docker push wissaaal/my-repo:jma-2.0'
                 }
             }
-        }
-        }
+       
+   
     
  
 }
