@@ -1,69 +1,76 @@
 pipeline {
     agent any
+    
     tools {
         jdk 'openJDK'
         maven 'Maven'
     }
+    
     stages {
         stage('Set JAVA_HOME') {
             steps {
-                timestamps{
-                script {
-                    env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
-                }
+                timestamps {
+                    script {
+                        env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
+                    }
                 }
             }
         }
+        
         stage("build jar") {
             steps {
-                timestamps{
-                echo "building the application..."
-                sh 'javac -version'
-                sh 'mvn package'
-            }
+                timestamps {
+                    echo "building the application..."
+                    sh 'javac -version'
+                    sh 'mvn package'
+                }
             }
         }
+        
         stage('Code Coverage') {
-            
             steps {
-                timestamps{
-                // Generate code coverage report
-                sh 'mvn jacoco:prepare-agent test jacoco:report'
-            }
+                timestamps {
+                    // Generate code coverage report
+                    sh 'mvn jacoco:prepare-agent test jacoco:report'
+                }
             }
         }
+        
         stage("build image") {
             steps {
-                timestamps{
-                echo "building the docker image..."
-                withCredentials([usernamePassword(credentialsId: 'docker_hub_cred', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-                    sh 'docker build -t wissaaal/my-repo:jma-2.0 .'
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push wissaaal/my-repo:jma-2.0'
-                }
+                timestamps {
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker_hub_cred', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh 'docker build -t wissaaal/my-repo:jma-2.0 .'
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh 'docker push wissaaal/my-repo:jma-2.0'
+                    }
                 }
             }
         }
+        
         stage('test') {
             steps {
                 echo 'testing'
             }
         }
+        
         stage('deploy') {
             steps {
                 echo 'deploying'
             }
         }
+        
+        stage('Copy files to Nginx container') {
+            steps {
+                sh '''
+                docker exec fada085c21f7 sh -c "mkdir -p /path/to/nginx/destination"
+                docker cp ./target/spring-petclinic-3.0.0-SNAPSHOT.jar fada085c21f7:/usr/share/nginx/html
+                '''
+            }
+        }
     }
-    stage('Copy files to Nginx container') {
-    steps {
-        sh '''
-        docker exec fada085c21f7 sh -c "mkdir -p /path/to/nginx/destination"
-        docker cp ./target/spring-petclinic-3.0.0-SNAPSHOT.jar fada085c21f7:/usr/share/nginx/html
-        '''
-    }
-}
-
+    
     post {
         always {
             // Publish code coverage report
