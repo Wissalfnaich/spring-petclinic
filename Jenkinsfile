@@ -65,7 +65,7 @@ pipeline {
     steps {
         script {
             def imageName = 'wissaaal/my-repo:jma-2.0'
-            def nginxContainerId = sh(returnStdout: true, script: 'docker ps -q --filter "id=d99cf8d02dbc"').trim()
+            def nginxContainerId = sh(returnStdout: true, script: 'docker ps -q --filter "id=a83410bd2444"').trim()
             
             // Poussez l'image Docker vers Docker Hub
             sh "docker push docker.io/${imageName}"
