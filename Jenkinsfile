@@ -62,14 +62,15 @@ pipeline {
         }
         
        stage('Copy files to Nginx container') {
-         steps {
-           script {
-             def imageName = 'wissaaal/my-repo:jma-2.0'
-             def nginxContainerId = sh(returnStdout: true, script: 'docker ps -q --filter "id=d99cf8d02dbc"').trim()
-             sh "docker cp ${imageName} ${nginxContainerId}:/path/to/nginx/destination"
+    steps {
+        script {
+            def imageName = 'wissaaal/my-repo:jma-2.0'
+            def nginxContainerId = sh(returnStdout: true, script: 'docker ps -q --filter "id=d99cf8d02dbc"').trim()
+            sh "docker cp ${imageName} ${nginxContainerId}:/path/to/nginx/destination"
         }
     }
 }
+
     }
     
     post {
