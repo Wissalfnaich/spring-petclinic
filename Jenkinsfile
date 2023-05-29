@@ -7,6 +7,13 @@ pipeline {
     }
         
     stages {
+        stage('Set JAVA_HOME') {
+          steps {
+            script {
+               env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
+                    }
+               }
+              }
         stage("build jar") {
             steps {
                echo "building the application..."
