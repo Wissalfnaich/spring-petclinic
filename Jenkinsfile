@@ -4,11 +4,13 @@ pipeline {
         jdk 'openJDK'
         maven 'Maven'
     }
-    timestamps {
+    stage {
         stage('Set JAVA_HOME') {
             steps {
+                timestamps{
                 script {
                     env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
+                }
                 }
             }
         }
