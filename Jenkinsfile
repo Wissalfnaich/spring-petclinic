@@ -49,17 +49,7 @@ pipeline {
             }
         }
         
-        stage('test') {
-            steps {
-                echo 'testing'
-            }
-        }
-        
-        stage('deploy') {
-            steps {
-                echo 'deploying'
-            }
-        }
+      
         
     stage('Deploy') {
     steps {
