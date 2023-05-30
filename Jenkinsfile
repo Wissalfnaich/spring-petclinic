@@ -1,4 +1,4 @@
-pipeline {
+ pipeline {
     agent any
     
     tools {
@@ -7,12 +7,21 @@ pipeline {
     }
     
     stages {
+        stage('Set JAVA_HOME') {
+            steps {
+                timestamps {
+                    script {
+                        env.JAVA_HOME = '/usr/lib/jvm/openjdk-17' 
+                    }
+                }
+            }
+        }
         
         stage("build jar") {
             steps {
                 timestamps {
                     echo "building the application..."
-                    sh 'mvn clean install'
+                    sh 'javac -version'
                     sh 'mvn package'
                 }
             }
@@ -38,6 +47,10 @@ pipeline {
                     }
                 }
             }
+        }
+        
+
+    }
     
     post {
         always {
