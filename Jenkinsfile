@@ -18,6 +18,15 @@
                 }
             }
         }
+         stage("build jar") {
+            steps {
+                timestamps {
+                    echo "building the application..."
+                    sh 'javac -version'
+                    sh 'mvn clean package'
+                }
+            }
+        }
          stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
@@ -35,15 +44,7 @@
                 }
             }
         }
-        stage("build jar") {
-            steps {
-                timestamps {
-                    echo "building the application..."
-                    sh 'javac -version'
-                    sh 'mvn package'
-                }
-            }
-        }
+        
         
         stage('Code Coverage') {
             steps {
