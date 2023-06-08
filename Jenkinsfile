@@ -7,6 +7,18 @@
     }
     
     stages {
+    stage('SonarQube analysis') {
+    def scannerHome = tool 'sonarqube'
+    withSonarQubeEnv('sonarqube') {
+        sh "${scannerHome}/bin/sonar-scanner \
+        -Dsonar.login=admin \
+        -Dsonar.password=admin \
+        -Dsonar.projectKey=sonarqube \
+        -Dsonar.exclusions=vendor/**,resources/**,**/*.java \
+        -Dsonar.host.url=http://localhost:9000/"
+    }
+}
+
         stage('Set JAVA_HOME') {
             steps {
                 timestamps {
