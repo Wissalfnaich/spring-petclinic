@@ -28,7 +28,7 @@
                             -Dsonar.password=Wissal12345 \
                            -Dsonar.projectKey=sonarqube \
                            -Dsonar.projectName='sonarqube' \
-                           -Dsonar.host.url=http://localhost:9000 \
+                           -Dsonar.host.url=http://172.17.0.3:9000/ \
                            -Dsonar.token=sqp_6e441ce14adc4ea8020d692422982f0282c4f5b8 "
 
                     }
