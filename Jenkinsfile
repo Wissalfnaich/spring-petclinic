@@ -26,9 +26,11 @@
                         sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.login=admin \
                             -Dsonar.password=Wissal12345 \
-                            -Dsonar.projectKey=sonarqube \
-                            -Dsonar.exclusions=vendor/**,resources/**,**/*.java \
-                            -Dsonar.host.url=http://localhost:9000/"
+                           -Dsonar.projectKey=sonarqube \
+                           -Dsonar.projectName='sonarqube' \
+                           -Dsonar.host.url=http://localhost:9000 \
+                           -Dsonar.token=sonarqube "
+
                     }
                 }
             }
