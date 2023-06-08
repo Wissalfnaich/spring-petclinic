@@ -28,7 +28,7 @@
                             -Dsonar.password=Wissal12345 \
                            -Dsonar.projectKey=sonarqube \
                            -Dsonar.projectName='sonarqube' \
-                           -Dsonar.host.url=http://localhost:9000 \
+                           -Dsonar.host.url=http://localhost:9000/ \
                            -Dsonar.token=sonarqube "
 
                     }
