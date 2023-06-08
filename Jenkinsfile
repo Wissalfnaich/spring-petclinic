@@ -25,7 +25,7 @@
                         def scannerHome = tool 'sonarqube'
                         sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.login=admin \
-                            -Dsonar.password=admin \
+                            -Dsonar.password=Wissal12345 \
                             -Dsonar.projectKey=sonarqube \
                             -Dsonar.exclusions=vendor/**,resources/**,**/*.java \
                             -Dsonar.host.url=http://localhost:9000/"
