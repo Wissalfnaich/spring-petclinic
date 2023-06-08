@@ -19,16 +19,20 @@
             }
         }
          stage('SonarQube analysis') {
-    def scannerHome = tool 'sonarqube'
-    withSonarQubeEnv('sonarqube') {
-        sh "${scannerHome}/bin/sonar-scanner \
-        -Dsonar.login=admin \
-        -Dsonar.password=admin \
-        -Dsonar.projectKey=sonarqube \
-        -Dsonar.exclusions=vendor/**,resources/**,**/*.java \
-        -Dsonar.host.url=http://localhost:9000/"
-    }
-}
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    script {
+                        def scannerHome = tool 'sonarqube'
+                        sh "${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.login=admin \
+                            -Dsonar.password=admin \
+                            -Dsonar.projectKey=sonarqube \
+                            -Dsonar.exclusions=vendor/**,resources/**,**/*.java \
+                            -Dsonar.host.url=http://localhost:9000/"
+                    }
+                }
+            }
+        }
         stage("build jar") {
             steps {
                 timestamps {
